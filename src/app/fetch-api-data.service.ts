@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { catchError } from 'rxjs/internal/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,16 +18,16 @@ export class FetchApiDataService {
   // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
-    return this.http.post(apiUrl + `users`, userDetails).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(apiUrl + `users`, userDetails)
+      .pipe(catchError(this.handleError));
   }
 
   // Making the api call for the user login endpoint
   public userLogin(userDetails: any): Observable<any> {
-    return this.http.post(apiUrl + 'login', userDetails).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(apiUrl + 'login', userDetails)
+      .pipe(catchError(this.handleError));
   }
 
   //Get all movies
@@ -58,6 +58,7 @@ export class FetchApiDataService {
 
   //Get director
   public getDirector(directorName: any): Observable<any> {
+    const token = localStorage.getItem('token');
 
     return this.http
       .get(apiUrl + `movies/director/${directorName}`, {
@@ -70,6 +71,7 @@ export class FetchApiDataService {
 
   //Get genre
   public getGenre(genreName: any): Observable<any> {
+    const token = localStorage.getItem('token');
 
     return this.http
       .get(apiUrl + `movies/genre/${genreName}`, {
