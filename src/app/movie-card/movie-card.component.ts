@@ -8,6 +8,8 @@ import { SynopsisComponent } from '../synopsis/synopsis.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
+
 
 @Component({
   selector: 'app-movie-card',
@@ -18,12 +20,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   favoriteMovies: any[] = [];
-  
+
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMovies();
@@ -45,8 +47,7 @@ export class MovieCardComponent implements OnInit {
 
   getFavoriteMovies(): void {
     this.fetchApiData.getFavoriteMovies().subscribe((resp: any) => {
-      this.favoriteMovies = resp;
-      console.log(this.favoriteMovies);
+      this.favoriteMovies = resp.FavoriteMovies;
       return this.favoriteMovies;
     });
   }
@@ -57,6 +58,7 @@ export class MovieCardComponent implements OnInit {
    * @returns true, if the movie is a favorite move, else false
    */
   isFav(id: string): boolean {
+    console.log(this.favoriteMovies)
     return this.favoriteMovies.includes(id);
   }
 
@@ -82,12 +84,12 @@ export class MovieCardComponent implements OnInit {
    * @param bio
    * @param birthday
    */
-  openDirectorDialog(name: string, bio: string, birthday: string): void {
+  openDirectorDialog(name: string, birth: string, death: string): void {
     this.dialog.open(DirectorComponent, {
       data: {
         Name: name,
-        Bio: bio,
-        Birth: birthday,
+        Birth: birth,
+        Death: death,
       },
       // Assign dialog width
       width: '500px',

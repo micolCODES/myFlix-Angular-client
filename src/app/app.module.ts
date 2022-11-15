@@ -57,6 +57,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatIconModule,
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,

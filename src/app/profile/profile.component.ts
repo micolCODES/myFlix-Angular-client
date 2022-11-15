@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   user: any = {};
+  favMovies: any = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
